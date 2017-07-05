@@ -191,14 +191,6 @@ get_known_folder(const GUID& folderid)
     return folder;
 }
 
-// Usually something like "c:\Program Files".
-static
-std::string
-get_program_folder()
-{
-    return get_known_folder(FOLDERID_ProgramFiles);
-}
-
 // Usually something like "c:\Users\username\Downloads".
 static
 std::string
@@ -208,8 +200,6 @@ get_download_folder()
 }
 
 #  else // !_WIN32
-
-#    ifndef INSTALL
 
 static
 std::string
@@ -226,8 +216,6 @@ expand_path(std::string path)
     return path;
 #      endif  // !TARGET_OS_IPHONE
 }
-
-#    endif  // !INSTALL
 
 static
 std::string
@@ -479,8 +467,6 @@ load_timezone_mappings_from_xml_file(const std::string& input_path)
     // Quick but not overly forgiving XML mapping file processing.
     bool mapTimezonesOpenTagFound = false;
     bool mapTimezonesCloseTagFound = false;
-    bool mapZoneOpenTagFound = false;
-    bool mapTZoneCloseTagFound = false;
     std::size_t mapZonePos = std::string::npos;
     std::size_t mapTimezonesPos = std::string::npos;
     CONSTDATA char mapTimeZonesOpeningTag[] = { "<mapTimezones " };
@@ -1462,7 +1448,7 @@ find_rule_for_zone(const std::pair<const Rule*, const Rule*>& eqr,
     const Rule* prev_rule = nullptr;
     while (r != nullptr)
     {
-        bool found;
+        bool found = false;
         switch (r->mdt().zone())
         {
         case tz::utc:
@@ -2863,6 +2849,14 @@ move_file(const std::string& from, const std::string& to)
 #    else  // !USE_SHELL_API
     return !!::MoveFile(from.c_str(), to.c_str());
 #    endif // !USE_SHELL_API
+}
+
+// Usually something like "c:\Program Files".
+static
+std::string
+get_program_folder()
+{
+    return get_known_folder(FOLDERID_ProgramFiles);
 }
 
 // Note folder can and usually does contain spaces.
