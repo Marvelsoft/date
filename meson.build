@@ -1,4 +1,4 @@
-project('datelib','cpp')
+project('datelib','cpp',default_options: ['cpp_std=c++14'])
 
 cpp_flags = ['-Wno-constant-logical-operand']
 
