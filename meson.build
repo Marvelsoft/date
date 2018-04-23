@@ -1,6 +1,12 @@
 project('datelib','cpp',default_options: ['cpp_std=c++14'])
 
-cpp_flags = ['-Wno-constant-logical-operand']
+tz_dir_flag = '-DINSTALL=' + meson.build_root() + '/testing_aplication'
+cpp_flags = ['-DTARGET_PLATFORM_LINUX', 
+             '-DHAS_REMOTE_API=0', 
+             '-DAUTO_DONWNLOAD=0', 
+             tz_dir_flag, 
+             '-Wno-constant-logical-operand'
+            ]
 
 libcurl = dependency('libcurl')
 
