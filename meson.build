@@ -1,6 +1,6 @@
 project('datelib','cpp',default_options: ['cpp_std=c++14'])
 
-tz_dir_flag = '-DINSTALL=' + meson.build_root() + '/testing_aplication'
+tz_dir_flag = '-DINSTALL=' + meson.build_root() + '/testing_application'
 cpp_flags = ['-DTARGET_PLATFORM_LINUX', 
              '-DHAS_REMOTE_API=0', 
              '-DAUTO_DONWNLOAD=0', 
