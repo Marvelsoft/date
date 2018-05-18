@@ -246,7 +246,7 @@ static
 std::string&
 access_install()
 {
-    static std::string install
+    static std::string install 
 #ifndef INSTALL
 
     = get_download_folder() + folder_delimiter + "tzdata";
@@ -3094,7 +3094,7 @@ remote_download(const std::string& version)
 #  else  // !_WIN32
     // Create download folder if it does not exist on UNIX system
     auto download_folder = get_download_folder();
-    if (!file_exists(download_folder))
+    if (!file_exists(download_folder)) 
     {
         make_directory(download_folder);
     }
@@ -3177,10 +3177,10 @@ get_version(const std::string& path)
 
 static
 TZ_DB
-init_tzdb(const std::string& tzdata_path)
+init_tzdb()
 {
     using namespace date;
-    const std::string& install = tzdata_path;
+    const std::string install = get_install();
     const std::string path = install + folder_delimiter;
     std::string line;
     bool continue_zone = false;
@@ -3301,28 +3301,15 @@ init_tzdb(const std::string& tzdata_path)
     return db;
 }
 
-static
-TZ_DB
-init_tzdb()
-{
-    return init_tzdb(get_install());
-}
-
 const TZ_DB&
-reload_tzdb(const std::string& tzdata_path)
+reload_tzdb()
 {
 #if AUTO_DOWNLOAD
     auto const& v = access_tzdb().version;
     if (!v.empty() && v == remote_version())
         return access_tzdb();
 #endif  // AUTO_DOWNLOAD
-    return access_tzdb() = init_tzdb(tzdata_path);
-}
-
-const TZ_DB&
-reload_tzdb()
-{
-    return reload_tzdb(get_install());
+    return access_tzdb() = init_tzdb();
 }
 
 #endif  // !USE_OS_TZDB

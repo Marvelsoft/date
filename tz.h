@@ -842,7 +842,6 @@ DATE_API const TZ_DB& get_tzdb();
 #if !USE_OS_TZDB
 
 DATE_API const TZ_DB& reload_tzdb();
-DATE_API const TZ_DB& reload_tzdb(const std::string& tzdata_path);
 DATE_API void         set_install(const std::string& install);
 
 #endif  // !USE_OS_TZDB
