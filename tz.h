@@ -58,7 +58,7 @@
 #  endif
 #endif
 
-static_assert(!(USE_OS_TZDB && HAS_REMOTE_API),
+static_assert(!(USE_OS_TZDB == 1 && HAS_REMOTE_API == 1),
               "USE_OS_TZDB and HAS_REMOTE_API can not be used together");
 
 #ifndef AUTO_DOWNLOAD
