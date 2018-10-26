@@ -1,6 +1,9 @@
-project('datelib','cpp',default_options: ['cpp_std=c++14'])
+project('datelib',
+        'cpp',
+        version: run_command('cat', files('version.txt')).stdout().strip(),
+        default_options: ['cpp_std=c++14'])
 
-tz_dir_flag = '-DINSTALL=' + meson.build_root() + '/testing_application'
+tz_dir_flag = '-DINSTALL=' + meson.build_root()
 cpp_flags = ['-DTARGET_PLATFORM_LINUX', 
              '-DHAS_REMOTE_API=0', 
              '-DAUTO_DONWNLOAD=0', 
@@ -10,8 +13,8 @@ cpp_flags = ['-DTARGET_PLATFORM_LINUX',
 
 libcurl = dependency('libcurl')
 
-date_src = files('tz.cpp')
-date_inc = include_directories('.')
+date_src = files('src/tz.cpp')
+date_inc = include_directories('include')
 
 date_hdr = declare_dependency(include_directories: date_inc)
 date_lib = static_library(

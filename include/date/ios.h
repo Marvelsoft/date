@@ -1,6 +1,10 @@
+//
+//  ios.h
+//  DateTimeLib
+//
 // The MIT License (MIT)
 //
-// Copyright (c) 2015, 2016 Howard Hinnant
+// Copyright (c) 2016 Alexander Kormanovsky
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -20,18 +24,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#include "tz.h"
-#include <type_traits>
+#ifndef ios_hpp
+#define ios_hpp
 
-int
-main()
-{
-    using namespace std;
-    using namespace date;
-    static_assert( is_nothrow_destructible<time_zone>{}, "");
-    static_assert(!is_default_constructible<time_zone>{}, "");
-    static_assert(!is_copy_constructible<time_zone>{}, "");
-    static_assert(!is_copy_assignable<time_zone>{}, "");
-    static_assert( is_nothrow_move_constructible<time_zone>{}, "");
-    static_assert( is_nothrow_move_assignable<time_zone>{}, "");
-}
+#if __APPLE__
+# include <TargetConditionals.h>
+# if TARGET_OS_IPHONE
+#   include <string>
+
+    namespace date
+    {
+    namespace iOSUtils
+    {
+    
+    std::string get_tzdata_path();
+    std::string get_current_timezone();
+    
+    }  // namespace iOSUtils
+    }  // namespace date
+
+# endif  // TARGET_OS_IPHONE
+#else   // !__APPLE__
+# define TARGET_OS_IPHONE 0
+#endif  // !__APPLE__
+#endif // ios_hpp
