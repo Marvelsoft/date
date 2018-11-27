@@ -17,7 +17,7 @@ date_src = files('src/tz.cpp')
 date_inc = include_directories('include')
 
 date_hdr = declare_dependency(include_directories: date_inc)
-date_lib = static_library(
+date_lib = shared_library(
   'date', 
   include_directories: date_inc, 
   sources: date_src, 
