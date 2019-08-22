@@ -12,7 +12,7 @@ cpp_flags = ['-DTARGET_PLATFORM_LINUX',
             ]
 
 libcurl = dependency('libcurl')
-
+thread_dep = dependency('threads')
 date_src = files('src/tz.cpp')
 date_inc = include_directories('include')
 
@@ -21,7 +21,7 @@ date_lib = shared_library(
   'date', 
   include_directories: date_inc, 
   sources: date_src, 
-  dependencies: libcurl, 
+  dependencies: [libcurl, thread_dep],
   cpp_args: cpp_flags)
 
 date_dep = declare_dependency(
